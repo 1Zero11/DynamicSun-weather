@@ -1,0 +1,95 @@
+﻿@model IEnumerable<DynamicSun_weather.Models.EntryModel>
+
+@{
+    ViewData["Title"] = "ViewTable2";
+}
+
+<h1>ViewTable2</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Temp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Humidity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dew)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pressure)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WindDirection)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WindSpeed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cloudiness)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CloudinessLowerBound)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Visibility)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Conditions)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Temp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Humidity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dew)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pressure)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WindDirection)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WindSpeed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cloudiness)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CloudinessLowerBound)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Visibility)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Conditions)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
