@@ -4,18 +4,18 @@
 @model PaginatedList<DynamicSun_weather.Models.EntryModel>
 
 @{
-    ViewData["Title"] = "ViewTable2";
+    ViewData["Title"] = "Просмотр архивов погодных условий в городе Москве";
 }
 
-<h1>ViewTable2</h1>
+<h1>Просмотр архивов погодных условий в городе Москве</h1>
 
 <form asp-action="ViewTable2" method="get">
     <div class="form-actions no-color">
         <p>
-            Найти: <input type="text" name="selectedYear" value="@ViewData["CurrentYear"]" />
+            Год: <input type="text" name="selectedYear" value="@ViewData["CurrentYear"]" />
             @Html.DropDownList("selectedMonth",
                 new SelectList(Enum.GetValues(typeof(Month))),
-                "Select Month",
+                "Месяц",
                 ViewData["CurrentMonth"])
             <input type="submit" value="Фильтровать" class="btn btn-default" /> |
             <a asp-action="ViewTable2">Back to Full List</a>
