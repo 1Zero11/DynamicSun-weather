@@ -20,7 +20,7 @@ namespace DynamicSun_weather.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Temp = table.Column<float>(type: "real", nullable: true),
-                    Humidity = table.Column<int>(type: "integer", nullable: true),
+                    Humidity = table.Column<float>(type: "real", nullable: true),
                     Dew = table.Column<float>(type: "real", nullable: true),
                     Pressure = table.Column<int>(type: "integer", nullable: true),
                     WindDirection = table.Column<string>(type: "text", nullable: true),

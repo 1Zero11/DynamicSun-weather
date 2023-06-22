@@ -45,8 +45,8 @@ namespace DynamicSun_weather.Migrations
                     b.Property<float?>("Dew")
                         .HasColumnType("real");
 
-                    b.Property<int?>("Humidity")
-                        .HasColumnType("integer");
+                    b.Property<float?>("Humidity")
+                        .HasColumnType("real");
 
                     b.Property<int?>("Pressure")
                         .HasColumnType("integer");

@@ -1,4 +1,7 @@
-﻿@model IEnumerable<DynamicSun_weather.Models.EntryModel>
+﻿@using DynamicSun_weather.Data;
+@using PagedList.Mvc;
+@using PagedList;
+@model PaginatedList<DynamicSun_weather.Models.EntryModel>
 
 @{
     ViewData["Title"] = "ViewTable2";
@@ -6,45 +9,57 @@
 
 <h1>ViewTable2</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<form asp-action="ViewTable2" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Найти: <input type="text" name="selectedYear" value="@ViewData["CurrentYear"]" />
+            @Html.DropDownList("selectedMonth",
+                new SelectList(Enum.GetValues(typeof(Month))),
+                "Select Month",
+                ViewData["CurrentMonth"])
+            <input type="submit" value="Фильтровать" class="btn btn-default" /> |
+            <a asp-action="ViewTable2">Back to Full List</a>
+        </p>
+    </div>
+</form>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Date)
+                Дата
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Temp)
+                Температура
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Humidity)
+                Влажность
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Dew)
+                Роса
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Pressure)
+                Давление
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.WindDirection)
+                Направление ветра
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.WindSpeed)
+                Скорость ветра
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cloudiness)
+                Облачность
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CloudinessLowerBound)
+                Нижняя граница облачности
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Visibility)
+                Видимость
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Conditions)
+                Условия
             </th>
+
             <th></th>
         </tr>
     </thead>
@@ -84,12 +99,28 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Conditions)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
         </tr>
 }
     </tbody>
 </table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="ViewTable2"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentMonth="@ViewData["CurrentMonth"]"
+   asp-route-currentYear="@ViewData["CurrentYear"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="ViewTable2"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentMonth="@ViewData["CurrentMonth"]"
+   asp-route-currentYear="@ViewData["CurrentYear"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>
+

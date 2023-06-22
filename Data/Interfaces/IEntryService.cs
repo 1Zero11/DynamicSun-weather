@@ -1,11 +1,11 @@
 ﻿using DynamicSun_weather.Models;
 
-namespace DynamicSun_weather.Data
+namespace DynamicSun_weather.Data.Interfaces
 {
     public interface IEntryService
     {
         IEnumerable<EntryModel> FileToEntries(IFormFile file);
         Task<int> Upload(IEnumerable<IFormFile> files);
-        IEnumerable<EntryModel> GetList(int num);
+        IQueryable<EntryModel> GetListPage(int perPage, int? page, int? year, int? month);
     }
 }

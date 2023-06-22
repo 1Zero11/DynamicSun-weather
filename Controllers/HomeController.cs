@@ -1,4 +1,4 @@
-﻿using DynamicSun_weather.Data;
+﻿using DynamicSun_weather.Data.Interfaces;
 using DynamicSun_weather.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -6,6 +6,11 @@ using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System.Diagnostics;
+using System.Drawing.Printing;
+using PagedList;
+using DynamicSun_weather.Common;
+using MathNet.Numerics.Distributions;
+using DynamicSun_weather.Data;
 
 namespace DynamicSun_weather.Controllers
 {
@@ -32,29 +37,49 @@ namespace DynamicSun_weather.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        public IActionResult ViewTable2()
-        {
-            entries = new List<EntryModel>(_entryService.GetList(20));
-
-            return View(entries);
-        }
         public IActionResult UploadFile()
         {
             return View();
         }
 
+        async public Task<IActionResult> ViewTable2(int? pageNumber, int? selectedYear, Month? selectedMonth, Month? currentMonth, int? currentYear)
+        {
+
+            if (selectedMonth != null || selectedYear != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                selectedMonth = currentMonth;
+                selectedYear = currentYear;
+            }
+
+            ViewData["CurrentMonth"] = selectedMonth;
+            ViewData["CurrentYear"] = selectedYear;
+
+            var pageSize = 20;
+            var entr = _entryService.GetListPage(pageSize, pageNumber, selectedYear, (int?)selectedMonth +1);
+
+            return View(await PaginatedList<EntryModel>.CreateAsync(entr, pageNumber ?? 1, pageSize));
+        }
+
         [HttpPost]
         public async Task<IActionResult> UploadMultiple(ICollection<IFormFile> postedFiles)
         {
-            await _entryService.Upload(postedFiles);
+            try
+            {
+                await _entryService.Upload(postedFiles);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                ViewBag.ErrorMessage = "Ошибка загрузки файла";
+            }
+
             //_entryService.FileToEntries(postedFiles.First());
 
-            return Accepted(postedFiles);
+            return View("~/Views/Home/UploadFile.cshtml");
         }
     }
 }

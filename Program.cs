@@ -1,4 +1,5 @@
 using DynamicSun_weather.Data;
+using DynamicSun_weather.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 

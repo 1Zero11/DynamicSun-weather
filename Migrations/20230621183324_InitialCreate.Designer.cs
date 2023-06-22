@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DynamicSun_weather.Migrations
 {
     [DbContext(typeof(EntryContext))]
-    [Migration("20230621130951_InitialCreate")]
+    [Migration("20230621183324_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -48,8 +48,8 @@ namespace DynamicSun_weather.Migrations
                     b.Property<float?>("Dew")
                         .HasColumnType("real");
 
-                    b.Property<int?>("Humidity")
-                        .HasColumnType("integer");
+                    b.Property<float?>("Humidity")
+                        .HasColumnType("real");
 
                     b.Property<int?>("Pressure")
                         .HasColumnType("integer");
